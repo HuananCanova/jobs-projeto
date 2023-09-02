@@ -1,8 +1,11 @@
 package br.ufsm.csi.jobs.service;
 
+import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.repo.VagaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VagaService {
@@ -10,5 +13,9 @@ public class VagaService {
     @Autowired
     public VagaService(VagaRepo vagaRepo) {
         this.vagaRepo = vagaRepo;
+    }
+
+    public List<Vaga> listarVagas() {
+        return vagaRepo.findAll();
     }
 }

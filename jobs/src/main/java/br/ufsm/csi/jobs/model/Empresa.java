@@ -1,6 +1,5 @@
 package br.ufsm.csi.jobs.model;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,14 +9,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "vagas")
-public class Vaga {
+@Entity
+public class Empresa {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String titulo;
-    private String localizacao;
-    //considerar usar enum para tipoContrato
-    private String tipoContrato;
+    private String razaoSocial;;
+    private String CNPJ;
 
 }
