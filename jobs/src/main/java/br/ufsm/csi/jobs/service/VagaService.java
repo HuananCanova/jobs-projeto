@@ -1,6 +1,5 @@
 package br.ufsm.csi.jobs.service;
 
-import br.ufsm.csi.jobs.model.Localizacao;
 import br.ufsm.csi.jobs.model.TipoContrato;
 import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.repo.VagaRepo;
@@ -27,6 +26,6 @@ public class VagaService {
 
 
     public List<Vaga> findByCidade(String cidade) {
-        return vagaRepo.findVagaByCidade(cidade);
+        return vagaRepo.findByCidade(cidade);
     }
 }

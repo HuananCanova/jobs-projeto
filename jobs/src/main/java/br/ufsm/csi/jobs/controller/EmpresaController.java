@@ -39,7 +39,10 @@ public class EmpresaController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteEmpresa(@PathVariable Long id){
+    void deleteEmpresa(@PathVariable Long id) {
+        // Primeiro, exclua todas as vagas associadas à empresa
+        empresaService.deleteVagasByEmpresaId(id);
+
         empresaService.deleteEmpresaById(id);
     }
 }

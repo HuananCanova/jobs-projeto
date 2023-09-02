@@ -10,15 +10,19 @@ import lombok.Setter;
 @Entity(name = "vagas")
 public class Vaga {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
 
-    @Column(name = "cidade")
     private String cidade;
-    
-    @Column(name = "tipocontrato")
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipocontrato")
     private TipoContrato tipoContrato;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
 }
