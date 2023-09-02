@@ -29,4 +29,8 @@ public class EmpresaService {
     public List<Empresa> findAllEmpresas() {
         return empresaRepo.findAll();
     }
+
+    public void deleteEmpresaById(Long id) {
+        empresaRepo.deleteById(id);
+    }
 }

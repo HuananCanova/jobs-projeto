@@ -1,5 +1,7 @@
 package br.ufsm.csi.jobs.service;
 
+import br.ufsm.csi.jobs.model.Localizacao;
+import br.ufsm.csi.jobs.model.TipoContrato;
 import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.repo.VagaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +19,14 @@ public class VagaService {
 
     public List<Vaga> listarVagas() {
         return vagaRepo.findAll();
+    }
+
+    public List<Vaga> findByTipoContrato(TipoContrato tipoContrato) {
+        return vagaRepo.findVagaByTipoContrato(tipoContrato);
+    }
+
+
+    public List<Vaga> findByCidade(String cidade) {
+        return vagaRepo.findVagaByCidade(cidade);
     }
 }

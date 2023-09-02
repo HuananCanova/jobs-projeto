@@ -1,10 +1,7 @@
 package br.ufsm.csi.jobs.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +13,12 @@ public class Vaga {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String titulo;
-    private String localizacao;
-    //considerar usar enum para tipoContrato
-    private String tipoContrato;
+
+    @Column(name = "cidade")
+    private String cidade;
+    
+    @Column(name = "tipocontrato")
+    @Enumerated(EnumType.STRING)
+    private TipoContrato tipoContrato;
 
 }

@@ -3,6 +3,7 @@ package br.ufsm.csi.jobs.controller;
 import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,4 +37,9 @@ public class EmpresaController {
         return empresaService.findAllEmpresas();
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteEmpresa(@PathVariable Long id){
+        empresaService.deleteEmpresaById(id);
+    }
 }
