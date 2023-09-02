@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity(name = "vagas")
 public class Vaga {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
     private String localizacao;

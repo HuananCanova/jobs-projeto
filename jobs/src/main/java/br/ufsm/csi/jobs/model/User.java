@@ -9,13 +9,13 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String senha;
@@ -23,14 +23,4 @@ public class User {
     private String sobrenome;
     private String fotoPerfilUrl;
 
-    public User(Long id, String email, String senha) {
-        this.id = id;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public User(String email, String nome) {
-        this.email = email;
-        this.nome = nome;
-    }
 }
