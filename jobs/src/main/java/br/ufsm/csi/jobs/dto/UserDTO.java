@@ -1,4 +1,10 @@
 package br.ufsm.csi.jobs.dto;
 
-public record UserDTO(String email, String nome) {
+import lombok.Data;
+
+@Data
+public class UserDTO {
+    private String email;
+    private String senha;
+    private String nome;
 }

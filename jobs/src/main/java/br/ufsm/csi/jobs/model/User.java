@@ -1,10 +1,7 @@
 package br.ufsm.csi.jobs.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -12,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "users")
+@SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
 public class User {
 
     @Id
@@ -21,16 +19,7 @@ public class User {
     private String senha;
     private String nome;
     private String sobrenome;
+    private String celular;
     private String fotoPerfilUrl;
 
-    public User(Long id, String email, String senha) {
-        this.id = id;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public User(String email, String nome) {
-        this.email = email;
-        this.nome = nome;
-    }
 }
