@@ -22,6 +22,13 @@ public class VagaController {
         this.vagaService = vagaService;
     }
 
+    @PostMapping
+    public ResponseEntity<String> createVaga(@RequestBody Vaga vaga) {
+        vagaService.saveVaga(vaga);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Vaga criada com sucesso!");
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Vaga> getVagaById(@PathVariable Long id) {
         Optional<Vaga> vaga = vagaService.getVagaById(id);
@@ -29,7 +36,7 @@ public class VagaController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Vaga>> listVaga() {
+    public ResponseEntity<List<Vaga>> getAllVagas() {
         List<Vaga> vagas = vagaService.listarVagas();
         return ResponseEntity.ok(vagas);
     }
@@ -46,11 +53,7 @@ public class VagaController {
         return ResponseEntity.ok(vagas);
     }
 
-    @PostMapping
-    public ResponseEntity<String> criarVaga(@RequestBody Vaga vaga) {
-        vagaService.saveVaga(vaga);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Vaga criada com sucesso!");
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVaga(@PathVariable Long id) throws VagaNotFoundException {

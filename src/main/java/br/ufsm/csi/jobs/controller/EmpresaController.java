@@ -32,7 +32,7 @@ public class EmpresaController {
         return empresa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/list")
+    @GetMapping()
     public ResponseEntity<List<Empresa>> getAllEmpresas() {
         List<Empresa> empresas = empresaService.findAllEmpresas();
         return ResponseEntity.ok(empresas);

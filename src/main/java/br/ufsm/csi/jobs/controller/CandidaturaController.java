@@ -22,12 +22,6 @@ public class CandidaturaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCandidatura);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Candidatura>> getAllCandidaturas() {
-        List<Candidatura> candidaturas = candidaturaService.getAllCandidaturas();
-        return ResponseEntity.ok(candidaturas);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Candidatura> getCandidaturaById(@PathVariable Long id) {
         try {
@@ -37,6 +31,13 @@ public class CandidaturaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping
+    public ResponseEntity<List<Candidatura>> getAllCandidaturas() {
+        List<Candidatura> candidaturas = candidaturaService.getAllCandidaturas();
+        return ResponseEntity.ok(candidaturas);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCandidatura(@PathVariable Long id) {
