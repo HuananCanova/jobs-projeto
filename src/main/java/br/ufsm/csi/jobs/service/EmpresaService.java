@@ -38,7 +38,7 @@ public class EmpresaService {
         if (empresaRepo.existsById(id)) {
             empresaRepo.deleteById(id);
         } else {
-            throw new EmpresaNotFoundException();
+            throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
         }
     }
 

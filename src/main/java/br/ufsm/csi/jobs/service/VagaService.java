@@ -39,7 +39,7 @@ public class VagaService {
         if (vagaRepo.existsById(id)) {
             vagaRepo.deleteById(id);
         } else {
-            throw new VagaNotFoundException();
+            throw new VagaNotFoundException("Vaga com ID " + id + " não encontrada");
         }
     }
 

@@ -24,12 +24,8 @@ public class VagaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Vaga> getVagaById(@PathVariable Long id) {
-        try {
-            Optional<Vaga> vaga = vagaService.getVagaById(id);
-            return ResponseEntity.ok(vaga.orElseThrow(VagaNotFoundException::new));
-        } catch (VagaNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<Vaga> vaga = vagaService.getVagaById(id);
+        return ResponseEntity.ok(vaga.orElseThrow());
     }
 
     @GetMapping("/list")

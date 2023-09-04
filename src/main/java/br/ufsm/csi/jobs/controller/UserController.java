@@ -36,12 +36,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> listUsers(@PathVariable Long id) {
-        try {
-            Optional<User> user = userService.getUserById(id);
-            return ResponseEntity.ok(user.orElseThrow(UserNotFoundException::new));
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<User> user = userService.getUserById(id);
+        return ResponseEntity.ok(user.orElseThrow());
     }
 
     @DeleteMapping("/{id}")

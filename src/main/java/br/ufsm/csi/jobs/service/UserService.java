@@ -40,7 +40,7 @@ public class UserService {
         if (userRepo.existsById(id)) {
             userRepo.deleteById(id);
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("User com ID " + id + " não encontrado");
         }
     }
 }
