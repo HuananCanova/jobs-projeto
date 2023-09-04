@@ -1,8 +1,10 @@
 package br.ufsm.csi.jobs.controller;
 
+import br.ufsm.csi.jobs.error.EmpresaNotFoundException;
 import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,29 +13,35 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/empresa")
 public class EmpresaController {
-
     private final EmpresaService empresaService;
+
     @Autowired
     public EmpresaController(EmpresaService empresaService) {
         this.empresaService = empresaService;
     }
 
-    //get by id
     @GetMapping("/{id}")
-    Optional<Empresa> getEmpresaById(@PathVariable Long id){
-        return empresaService.getEmpresaById(id);
+    public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long id) {
+        Optional<Empresa> empresa = empresaService.getEmpresaById(id);
+        return ResponseEntity.ok(empresa.orElseThrow());
     }
 
-
-    //get by nome
     @GetMapping("/getByRazaoSocial")
-    public Optional<Empresa> getEmpresaByRazaoSocial(@RequestParam("razaoSocial") String razaoSocial) {
-        return empresaService.findEmpresaByRazaoSocial(razaoSocial);
+    public ResponseEntity<Empresa> getEmpresaByRazaoSocial(@RequestParam("razaoSocial") String razaoSocial) {
+        Optional<Empresa> empresa = empresaService.findEmpresaByRazaoSocial(razaoSocial);
+        return empresa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/list")
-    List<Empresa> getAllEmpresas(){
-        return empresaService.findAllEmpresas();
+    public ResponseEntity<List<Empresa>> getAllEmpresas() {
+        List<Empresa> empresas = empresaService.findAllEmpresas();
+        return ResponseEntity.ok(empresas);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) throws EmpresaNotFoundException {
+        empresaService.deleteVagasByEmpresaId(id);
+        empresaService.deleteEmpresaById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
