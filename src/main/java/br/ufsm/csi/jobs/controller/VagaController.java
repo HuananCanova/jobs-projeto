@@ -40,20 +40,6 @@ public class VagaController {
         return ResponseEntity.ok(vagas);
     }
 
-    @GetMapping("/searchByTipoContrato")
-    public ResponseEntity<List<Vaga>> searchByTipoContrato(@RequestParam("tipoContrato") TipoContrato tipoContrato) {
-        List<Vaga> vagas = vagaService.findByTipoContrato(tipoContrato);
-        return ResponseEntity.ok(vagas);
-    }
-
-    @GetMapping("/searchByCidade")
-    public ResponseEntity<List<Vaga>> searchByCidade(@RequestParam("cidade") String cidade) {
-        List<Vaga> vagas = vagaService.findByCidade(cidade);
-        return ResponseEntity.ok(vagas);
-    }
-
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVaga(@PathVariable Long id) throws VagaNotFoundException {
         vagaService.deleteById(id);

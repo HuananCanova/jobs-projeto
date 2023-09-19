@@ -22,13 +22,6 @@ public class VagaService {
         return vagaRepo.findAll();
     }
 
-    public List<Vaga> findByTipoContrato(TipoContrato tipoContrato) {
-        return vagaRepo.findVagaByTipoContrato(tipoContrato);
-    }
-
-    public List<Vaga> findByCidade(String cidade) {
-        return vagaRepo.findByCidade(cidade);
-    }
 
     public void saveVaga(Vaga vaga) {
         vagaRepo.save(vaga);

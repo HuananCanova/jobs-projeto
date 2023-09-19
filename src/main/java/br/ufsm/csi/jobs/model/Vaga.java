@@ -14,6 +14,7 @@ public class Vaga {
     private Long id;
 
     private String titulo;
+    private String descricao;
     private String requisitos;
     @ManyToOne
     @JoinColumn(name = "empresa_id")
