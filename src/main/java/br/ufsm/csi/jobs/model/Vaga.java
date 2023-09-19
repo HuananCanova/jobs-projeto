@@ -14,13 +14,7 @@ public class Vaga {
     private Long id;
 
     private String titulo;
-
-    private String cidade;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipocontrato")
-    private TipoContrato tipoContrato;
-
+    private String requisitos;
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;

@@ -1,9 +1,6 @@
 package br.ufsm.csi.jobs.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +13,7 @@ public class Empresa {
     private Long id;
     private String razaoSocial;;
     private String CNPJ;
-
+    private String email;
+    @Embedded
+    private Endereco endereco;
 }
