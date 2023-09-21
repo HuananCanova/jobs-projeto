@@ -1,13 +1,15 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.error.CandidaturaNotFoundException;
+import br.ufsm.csi.jobs.infra.CandidaturaNotFoundException;
 import br.ufsm.csi.jobs.model.Candidatura;
 import br.ufsm.csi.jobs.service.CandidaturaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,9 +19,10 @@ public class CandidaturaController {
     private CandidaturaService candidaturaService;
 
     @PostMapping
-    public ResponseEntity<Candidatura> createCandidatura(@RequestBody Candidatura candidatura) {
-        Candidatura createdCandidatura = candidaturaService.createCandidatura(candidatura);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCandidatura);
+    public ResponseEntity<Candidatura> createCandidatura(@RequestBody @Valid Candidatura candidatura, UriComponentsBuilder uriBuilder) {
+        candidaturaService.createCandidatura(candidatura);
+        URI uri = uriBuilder.path("/candidatura/{id}").buildAndExpand(candidatura.getId()).toUri();
+        return ResponseEntity.created(uri).body(candidatura);
     }
 
     @GetMapping("/{id}")

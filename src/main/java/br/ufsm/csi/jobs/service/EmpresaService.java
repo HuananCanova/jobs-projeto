@@ -1,6 +1,6 @@
 package br.ufsm.csi.jobs.service;
 
-import br.ufsm.csi.jobs.error.EmpresaNotFoundException;
+import br.ufsm.csi.jobs.infra.EmpresaNotFoundException;
 import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.repo.EmpresaRepo;
 import br.ufsm.csi.jobs.repo.VagaRepo;
@@ -21,6 +21,11 @@ public class EmpresaService {
         this.empresaRepo = empresaRepo;
         this.vagaRepo = vagaRepo;
     }
+    @Transactional
+    public void createEmpresa(Empresa empresa) {
+        empresaRepo.save(empresa);
+    }
+
 
     public Optional<Empresa> getEmpresaById(Long id) {
         return empresaRepo.findById(id);
@@ -47,7 +52,4 @@ public class EmpresaService {
         vagaRepo.deleteByEmpresaId(id);
     }
 
-    public void createEmpresa(Empresa empresa) {
-        empresaRepo.save(empresa);
-    }
 }

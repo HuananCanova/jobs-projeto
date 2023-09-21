@@ -21,6 +21,7 @@ public class Endereco {
     private String cep;
     private String numero;
     private String cidade;
+    @Size(max = 2, message = "UF inválido")
     private String uf;
 }
 

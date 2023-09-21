@@ -1,13 +1,15 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.error.VagaNotFoundException;
+import br.ufsm.csi.jobs.infra.VagaNotFoundException;
 import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.service.VagaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +24,18 @@ public class VagaController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createVaga(@RequestBody Vaga vaga) {
+    public ResponseEntity<Vaga> createVaga(@RequestBody @Valid Vaga vaga, UriComponentsBuilder uriBuilder) {
         vagaService.saveVaga(vaga);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Vaga criada com sucesso!");
+        URI uri = uriBuilder.path("/vaga/{id}").buildAndExpand(vaga.getId()).toUri();
+        return ResponseEntity.created(uri).body(vaga);
     }
 
+
+    @GetMapping
+    public ResponseEntity<List<Vaga>> getAllVagas() {
+        List<Vaga> vagas = vagaService.listarVagas();
+        return ResponseEntity.ok(vagas);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Vaga> getVagaById(@PathVariable Long id) {
@@ -34,11 +43,6 @@ public class VagaController {
         return ResponseEntity.ok(vaga.orElseThrow());
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Vaga>> getAllVagas() {
-        List<Vaga> vagas = vagaService.listarVagas();
-        return ResponseEntity.ok(vagas);
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVaga(@PathVariable Long id) throws VagaNotFoundException {

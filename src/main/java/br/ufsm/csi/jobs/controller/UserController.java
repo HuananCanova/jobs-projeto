@@ -1,14 +1,15 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.dto.UserDTO;
-import br.ufsm.csi.jobs.error.UserNotFoundException;
+import br.ufsm.csi.jobs.infra.UserNotFoundException;
 import br.ufsm.csi.jobs.model.User;
 import br.ufsm.csi.jobs.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +24,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO) {
-        userService.createUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso!");
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user, UriComponentsBuilder uriBuilder) {
+        userService.createUser(user);
+        URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
     @GetMapping

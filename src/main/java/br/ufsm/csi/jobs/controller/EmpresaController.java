@@ -1,12 +1,16 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.error.EmpresaNotFoundException;
+import br.ufsm.csi.jobs.infra.EmpresaNotFoundException;
 import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.service.EmpresaService;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +25,23 @@ public class EmpresaController {
     }
 
     @PostMapping
-    public ResponseEntity<Empresa> createEmpresa(@RequestBody Empresa empresa){
+    public ResponseEntity<Empresa> createEmpresa(@RequestBody @Valid Empresa empresa, UriComponentsBuilder uriBuilder) {
         empresaService.createEmpresa(empresa);
-        return ResponseEntity.ok(empresa);
+        URI uri = uriBuilder.path("/empresa/{id}").buildAndExpand(empresa.getId()).toUri();
+        return ResponseEntity.created(uri).body(empresa);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long id) {
         Optional<Empresa> empresa = empresaService.getEmpresaById(id);
         return ResponseEntity.ok(empresa.orElseThrow());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Empresa>> getAllEmpresas() {
+        List<Empresa> empresas = empresaService.findAllEmpresas();
+        return ResponseEntity.ok(empresas);
     }
 
     @GetMapping("/getByRazaoSocial")
@@ -38,12 +50,7 @@ public class EmpresaController {
         return empresa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Empresa>> getAllEmpresas() {
-        List<Empresa> empresas = empresaService.findAllEmpresas();
-        return ResponseEntity.ok(empresas);
-    }
-
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) throws EmpresaNotFoundException {
         empresaService.deleteVagasByEmpresaId(id);

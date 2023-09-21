@@ -1,6 +1,7 @@
 package br.ufsm.csi.jobs.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class Empresa {
     @Column(name = "razao_social")
     private String razaoSocial;
 
+    @Size(max = 14, message = "máximo de 14 dígitos - CNPJ")
     private String CNPJ;
     private String email;
 

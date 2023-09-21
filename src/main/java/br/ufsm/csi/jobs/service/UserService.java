@@ -1,9 +1,9 @@
 package br.ufsm.csi.jobs.service;
 
-import br.ufsm.csi.jobs.dto.UserDTO;
-import br.ufsm.csi.jobs.error.UserNotFoundException;
+import br.ufsm.csi.jobs.infra.UserNotFoundException;
 import br.ufsm.csi.jobs.model.User;
 import br.ufsm.csi.jobs.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +19,9 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public void createUser(UserDTO userDTO) {
-        User user = new User();
-        user.setEmail(userDTO.getEmail());
-        user.setSenha(userDTO.getSenha());
-        user.setNome(userDTO.getNome());
 
+    @Transactional
+    public void createUser(User user) {
         userRepo.save(user);
     }
 

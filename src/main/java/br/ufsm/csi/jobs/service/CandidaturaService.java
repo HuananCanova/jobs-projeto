@@ -1,6 +1,6 @@
 package br.ufsm.csi.jobs.service;
 
-import br.ufsm.csi.jobs.error.CandidaturaNotFoundException;
+import br.ufsm.csi.jobs.infra.CandidaturaNotFoundException;
 import br.ufsm.csi.jobs.model.Candidatura;
 import br.ufsm.csi.jobs.repo.CandidaturaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
