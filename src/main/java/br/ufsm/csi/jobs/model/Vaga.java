@@ -2,12 +2,12 @@ package br.ufsm.csi.jobs.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Entity(name = "vagas")
+@Data
+@Entity
 public class Vaga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

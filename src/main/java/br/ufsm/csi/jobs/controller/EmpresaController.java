@@ -20,6 +20,12 @@ public class EmpresaController {
         this.empresaService = empresaService;
     }
 
+    @PostMapping
+    public ResponseEntity<Empresa> createEmpresa(@RequestBody Empresa empresa){
+        empresaService.createEmpresa(empresa);
+        return ResponseEntity.ok(empresa);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long id) {
         Optional<Empresa> empresa = empresaService.getEmpresaById(id);

@@ -46,4 +46,8 @@ public class EmpresaService {
     public void deleteVagasByEmpresaId(Long id) {
         vagaRepo.deleteByEmpresaId(id);
     }
+
+    public void createEmpresa(Empresa empresa) {
+        empresaRepo.save(empresa);
+    }
 }

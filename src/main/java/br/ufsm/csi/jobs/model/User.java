@@ -4,12 +4,9 @@ package br.ufsm.csi.jobs.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity(name = "users")
-@SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
+@Data
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -20,6 +17,5 @@ public class User {
     private String senha;
     private String celular;
     private String fotoPerfilUrl;
-
 
 }

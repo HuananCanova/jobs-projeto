@@ -1,19 +1,24 @@
 package br.ufsm.csi.jobs.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@Entity(name = "empresas")
+@Data
+@Entity
 public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String razaoSocial;;
+
+    @Column(name = "razao_social")
+    private String razaoSocial;
+
     private String CNPJ;
     private String email;
-    @Embedded
+
+    @OneToOne
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 }

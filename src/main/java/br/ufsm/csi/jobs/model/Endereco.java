@@ -1,25 +1,26 @@
 package br.ufsm.csi.jobs.model;
 
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Embeddable
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Entity
 public class Endereco {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String complemento;
     private String bairro;
-    @Size(min = 8, max = 9, message = "CEP invalido")
+
+    @Size(min = 8, max = 9, message = "CEP inválido")
     private String cep;
     private String numero;
     private String cidade;
     private String uf;
-
 }
+
