@@ -1,5 +1,6 @@
 package br.ufsm.csi.jobs.controller;
 
+import br.ufsm.csi.jobs.dto.UserDTO;
 import br.ufsm.csi.jobs.infra.UserNotFoundException;
 import br.ufsm.csi.jobs.model.User;
 import br.ufsm.csi.jobs.service.UserService;
@@ -30,16 +31,21 @@ public class UserController {
         return ResponseEntity.created(uri).body(user);
     }
 
-    @GetMapping
+/*    @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.listUsers();
         return ResponseEntity.ok(users);
+    }*/
+
+    @GetMapping
+    public List<UserDTO> getAllUsers() {
+        return userService.findALlUsers();
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getUserById(id);
-        return ResponseEntity.ok(user.orElseThrow());
+    public UserDTO getUserById(@PathVariable Long id) {
+        return userService.findUser(id);
     }
 
     @DeleteMapping("/{id}")

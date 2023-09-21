@@ -1,10 +1,11 @@
 package br.ufsm.csi.jobs.dto;
 
+import br.ufsm.csi.jobs.model.User;
 import lombok.Data;
 
-@Data
-public class UserDTO {
-    private String email;
-    private String senha;
-    private String nome;
+
+public record UserDTO (Long id, String email){
+    public UserDTO (User user){
+        this(user.getId(), user.getEmail());
+    }
 }

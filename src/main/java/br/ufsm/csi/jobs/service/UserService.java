@@ -1,10 +1,13 @@
 package br.ufsm.csi.jobs.service;
 
+import br.ufsm.csi.jobs.dto.UserDTO;
 import br.ufsm.csi.jobs.infra.UserNotFoundException;
 import br.ufsm.csi.jobs.model.User;
 import br.ufsm.csi.jobs.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class UserService {
 
     @Transactional
     public void createUser(User user) {
+        user.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
         userRepo.save(user);
     }
 
@@ -29,9 +33,19 @@ public class UserService {
         return userRepo.findAll();
     }
 
+    public List<UserDTO> findALlUsers(){
+        return this.userRepo.findAll().stream().map(UserDTO::new).toList();
+    }
+
     public Optional<User> getUserById(Long id) {
         return userRepo.findById(id);
     }
+
+    public UserDTO findUser(Long id){
+        User user = this.userRepo.getReferenceById(id);
+        return new UserDTO(user);
+    }
+
 
     public void deleteUser(Long id) throws UserNotFoundException {
         if (userRepo.existsById(id)) {
