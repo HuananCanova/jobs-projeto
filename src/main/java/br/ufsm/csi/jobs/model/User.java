@@ -4,6 +4,11 @@ package br.ufsm.csi.jobs.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -26,5 +31,7 @@ public class User {
 
     @Column(nullable = true)
     private String fotoPerfilUrl;
+
+
 
 }

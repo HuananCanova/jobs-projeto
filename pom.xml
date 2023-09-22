@@ -38,6 +38,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!--		SPRING SECURITY-->
 
 		<dependency>

@@ -6,12 +6,16 @@ import br.ufsm.csi.jobs.model.User;
 import br.ufsm.csi.jobs.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -23,9 +27,9 @@ public class UserService {
     }
 
 
-    @Transactional
     public void createUser(User user) {
         user.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
+
         userRepo.save(user);
     }
 

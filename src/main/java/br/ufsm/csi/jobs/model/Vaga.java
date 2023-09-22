@@ -3,10 +3,7 @@ package br.ufsm.csi.jobs.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @Entity
@@ -22,4 +19,4 @@ public class Vaga {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-}
+}q
