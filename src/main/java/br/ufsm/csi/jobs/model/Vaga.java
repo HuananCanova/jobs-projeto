@@ -19,4 +19,4 @@ public class Vaga {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-}q
+}
