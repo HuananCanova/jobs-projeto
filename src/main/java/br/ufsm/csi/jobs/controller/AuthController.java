@@ -1,6 +1,6 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.dto.DadosAutenticacao;
+import br.ufsm.csi.jobs.dto.RequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity logar(@RequestBody @Valid DadosAutenticacao dados) {
+    public ResponseEntity logar(@RequestBody @Valid RequestDTO dados) {
         Authentication authenticated = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
         Authentication auth = authenticationManager.authenticate(authenticated);
         return ResponseEntity.ok().body(auth.getPrincipal());
