@@ -10,6 +10,8 @@ Tecnologias Utilizadas
     Spring Framework
     Postgres
     Flyway
+    Auth0
+    JWT
 
 Funcionalidades
 
