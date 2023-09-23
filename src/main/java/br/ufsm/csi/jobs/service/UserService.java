@@ -2,20 +2,14 @@ package br.ufsm.csi.jobs.service;
 
 import br.ufsm.csi.jobs.dto.UserDTO;
 import br.ufsm.csi.jobs.infra.UserNotFoundException;
-import br.ufsm.csi.jobs.model.User;
+import br.ufsm.csi.jobs.model.Usuario;
 import br.ufsm.csi.jobs.repo.UserRepo;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -27,13 +21,13 @@ public class UserService {
     }
 
 
-    public void createUser(User user) {
+    public void createUser(Usuario user) {
         user.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
         user.getRoles().add("ROLE_USER");
         userRepo.save(user);
     }
 
-    public List<User> listUsers() {
+    public List<Usuario> listUsers() {
         return userRepo.findAll();
     }
 
@@ -41,12 +35,12 @@ public class UserService {
         return this.userRepo.findAll().stream().map(UserDTO::new).toList();
     }
 
-    public Optional<User> getUserById(Long id) {
+    public Optional<Usuario> getUserById(Long id) {
         return userRepo.findById(id);
     }
 
     public UserDTO findUser(Long id){
-        User user = this.userRepo.getReferenceById(id);
+        Usuario user = this.userRepo.getReferenceById(id);
         return new UserDTO(user);
     }
 

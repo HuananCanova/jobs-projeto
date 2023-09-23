@@ -3,10 +3,7 @@ package br.ufsm.csi.jobs.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
-public class User {
+public class Usuario {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
