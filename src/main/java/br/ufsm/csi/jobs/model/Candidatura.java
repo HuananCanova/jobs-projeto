@@ -10,7 +10,7 @@ public class Candidatura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private User user;
+    private Usuario user;
     @ManyToOne
     private Vaga vaga;
 
