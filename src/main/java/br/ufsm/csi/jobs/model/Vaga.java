@@ -10,7 +10,7 @@ import lombok.Data;
 public class Vaga {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Campo obrigatório!")
     private String titulo;
     @NotBlank
     private String descricao;
