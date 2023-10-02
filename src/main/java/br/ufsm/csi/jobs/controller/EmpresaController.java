@@ -34,12 +34,7 @@ public class EmpresaController {
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long id) {
         Optional<Empresa> empresa = empresaService.getEmpresaById(id);
-
-        if (empresa.isPresent()) {
-            return ResponseEntity.ok(empresa.get());
-        } else {
-            throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
-        }
+        return ResponseEntity.ok(empresa.get());
     }
 
     @GetMapping
@@ -58,18 +53,8 @@ public class EmpresaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) {
         empresaService.deleteVagasByEmpresaId(id);
-        boolean empresaDeleted = empresaService.deleteEmpresaById(id);
+        empresaService.deleteEmpresaById(id);
+        return ResponseEntity.noContent().build();
 
-        if (empresaDeleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
-        }
-    }
-
-    // Tratamento da exceção personalizada
-    @ExceptionHandler(EmpresaNotFoundException.class)
-    public ResponseEntity<String> handleEmpresaNotFoundException(EmpresaNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
+}
 }

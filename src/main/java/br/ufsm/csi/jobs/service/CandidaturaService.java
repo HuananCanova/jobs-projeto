@@ -30,6 +30,7 @@ public class CandidaturaService {
         if (optionalCandidatura.isPresent()) {
             return optionalCandidatura.get();
         }
+        return null;
     }
 
 

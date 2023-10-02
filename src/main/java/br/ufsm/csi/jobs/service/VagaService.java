@@ -26,12 +26,9 @@ public class VagaService {
         vagaRepo.save(vaga);
     }
 
-    public void deleteById(Long id) throws VagaNotFoundException {
-        if (vagaRepo.existsById(id)) {
-            vagaRepo.deleteById(id);
-        } else {
-            throw new VagaNotFoundException("Vaga com ID " + id + " não encontrada");
-        }
+    public void deleteById(Long id) {
+        vagaRepo.existsById(id);
+        vagaRepo.deleteById(id);
     }
 
     public Optional<Vaga> getVagaById(Long id) {

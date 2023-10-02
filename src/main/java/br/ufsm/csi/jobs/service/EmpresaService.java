@@ -38,13 +38,10 @@ public class EmpresaService {
         return empresaRepo.findAll();
     }
 
-    public boolean deleteEmpresaById(Long id) throws EmpresaNotFoundException {
+    public void deleteEmpresaById(Long id){
         if (empresaRepo.existsById(id)) {
             empresaRepo.deleteById(id);
-        } else {
-            throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
         }
-        return true;
     }
 
     @Transactional
