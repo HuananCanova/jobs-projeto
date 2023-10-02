@@ -1,6 +1,5 @@
 package br.ufsm.csi.jobs.service;
 
-import br.ufsm.csi.jobs.infra.VagaNotFoundException;
 import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.repo.VagaRepo;
 import org.springframework.beans.factory.annotation.Autowired;

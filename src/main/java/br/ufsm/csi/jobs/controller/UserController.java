@@ -1,7 +1,6 @@
 package br.ufsm.csi.jobs.controller;
 
 import br.ufsm.csi.jobs.dto.UserDTO;
-import br.ufsm.csi.jobs.infra.UserNotFoundException;
 import br.ufsm.csi.jobs.model.Usuario;
 import br.ufsm.csi.jobs.service.UserService;
 import jakarta.validation.Valid;
@@ -43,13 +42,19 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id) {
-        return userService.findUser(id);
+    public UserDTO getUserById(@PathVariable Long id){
+
+            return userService.findUser(id);
+
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws UserNotFoundException {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+
+            userService.deleteUser(id);
+            return ResponseEntity.ok("Usuário com ID " + id + " foi deletado com sucesso");
+
     }
+
 }

@@ -1,7 +1,6 @@
 package br.ufsm.csi.jobs.service;
 
 import br.ufsm.csi.jobs.dto.UserDTO;
-import br.ufsm.csi.jobs.infra.UserNotFoundException;
 import br.ufsm.csi.jobs.model.Usuario;
 import br.ufsm.csi.jobs.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +44,9 @@ public class UserService {
     }
 
 
-    public void deleteUser(Long id) throws UserNotFoundException {
+    public void deleteUser(Long id){
         if (userRepo.existsById(id)) {
             userRepo.deleteById(id);
-        } else {
-            throw new UserNotFoundException("User com ID " + id + " não encontrado");
         }
     }
 }

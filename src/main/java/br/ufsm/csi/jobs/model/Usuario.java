@@ -4,8 +4,7 @@ package br.ufsm.csi.jobs.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +25,6 @@ public class Usuario {
     private String email;
 
     @NotBlank(message = "Senha não pode conter espaços em branco!")
-    @Size(min = 6, max = 16)
     private String senha;
 
     @NotBlank(message = "Número de telefone inválido!")

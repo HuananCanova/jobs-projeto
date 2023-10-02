@@ -1,6 +1,5 @@
 package br.ufsm.csi.jobs.service;
 
-import br.ufsm.csi.jobs.infra.EmpresaNotFoundException;
 import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.repo.EmpresaRepo;
 import br.ufsm.csi.jobs.repo.VagaRepo;
@@ -39,12 +38,13 @@ public class EmpresaService {
         return empresaRepo.findAll();
     }
 
-    public void deleteEmpresaById(Long id) throws EmpresaNotFoundException {
+    public boolean deleteEmpresaById(Long id) throws EmpresaNotFoundException {
         if (empresaRepo.existsById(id)) {
             empresaRepo.deleteById(id);
         } else {
             throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
         }
+        return true;
     }
 
     @Transactional

@@ -29,27 +29,17 @@ public class SecurityConfig {
                 .sessionManagement(sm-> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(HttpMethod.POST, "/login").permitAll()
-                            .requestMatchers(HttpMethod.GET, "/empresa").hasAnyAuthority("ROLE_USER")
-                            .requestMatchers(HttpMethod.GET, "/vaga").hasAnyAuthority("ROLE_USER")
+                                .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasAnyAuthority("ROLE_USER")
+                                .requestMatchers(HttpMethod.GET, "/empresa").hasAnyAuthority("ROLE_USER")
+                                .requestMatchers(HttpMethod.POST, "/empresa").hasAnyAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/empresa/{id}").hasAnyAuthority("ROLE_USER")
+                                .requestMatchers(HttpMethod.POST, "/empresa").hasAnyAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/vaga").hasAnyAuthority("ROLE_USER")
                                 .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-/*    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/public/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
-    }*/
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {

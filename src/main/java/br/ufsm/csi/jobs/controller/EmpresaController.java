@@ -1,11 +1,11 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.infra.EmpresaNotFoundException;
 import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.service.EmpresaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,11 +31,15 @@ public class EmpresaController {
         return ResponseEntity.created(uri).body(empresa);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long id) {
         Optional<Empresa> empresa = empresaService.getEmpresaById(id);
-        return ResponseEntity.ok(empresa.orElseThrow());
+
+        if (empresa.isPresent()) {
+            return ResponseEntity.ok(empresa.get());
+        } else {
+            throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
+        }
     }
 
     @GetMapping
@@ -52,9 +56,20 @@ public class EmpresaController {
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) throws EmpresaNotFoundException {
+    public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) {
         empresaService.deleteVagasByEmpresaId(id);
-        empresaService.deleteEmpresaById(id);
-        return ResponseEntity.noContent().build();
+        boolean empresaDeleted = empresaService.deleteEmpresaById(id);
+
+        if (empresaDeleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            throw new EmpresaNotFoundException("Empresa com ID " + id + " não encontrada");
+        }
+    }
+
+    // Tratamento da exceção personalizada
+    @ExceptionHandler(EmpresaNotFoundException.class)
+    public ResponseEntity<String> handleEmpresaNotFoundException(EmpresaNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

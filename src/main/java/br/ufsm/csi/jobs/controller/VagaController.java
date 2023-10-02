@@ -1,6 +1,5 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.infra.VagaNotFoundException;
 import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.service.VagaService;
 import jakarta.validation.Valid;

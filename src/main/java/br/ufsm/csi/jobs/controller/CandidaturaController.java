@@ -1,6 +1,5 @@
 package br.ufsm.csi.jobs.controller;
 
-import br.ufsm.csi.jobs.infra.CandidaturaNotFoundException;
 import br.ufsm.csi.jobs.model.Candidatura;
 import br.ufsm.csi.jobs.service.CandidaturaService;
 import jakarta.validation.Valid;
@@ -26,14 +25,11 @@ public class CandidaturaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Candidatura> getCandidaturaById(@PathVariable Long id) {
-        try {
+    public ResponseEntity<Candidatura> getCandidaturaById(@PathVariable Long id){
             Candidatura candidatura = candidaturaService.getCandidaturaById(id);
             return ResponseEntity.ok(candidatura);
-        } catch (CandidaturaNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
+
 
     @GetMapping
     public ResponseEntity<List<Candidatura>> getAllCandidaturas() {
