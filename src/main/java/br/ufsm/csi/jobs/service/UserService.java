@@ -14,7 +14,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepo userRepo;
 
-    @Autowired
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
@@ -22,7 +21,13 @@ public class UserService {
 
     public void createUser(Usuario user) {
         user.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
-        user.getRoles().add("ROLE_USER");
+
+        // Verifica o valor do campo 'role' e atribui as roles apropriadas
+        if (user.getRoles().equals("ROLE_USER")) {
+            user.getRoles().add("ROLE_USER");
+        } else if (user.getRoles().equals("ROLE_EMPRESA")) {
+            user.getRoles().add("ROLE_EMPRESA");
+        }
         userRepo.save(user);
     }
 
@@ -42,7 +47,6 @@ public class UserService {
         Usuario user = this.userRepo.getReferenceById(id);
         return new UserDTO(user);
     }
-
 
     public void deleteUser(Long id){
         if (userRepo.existsById(id)) {

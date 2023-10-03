@@ -15,7 +15,6 @@ public class EmpresaService {
     private final EmpresaRepo empresaRepo;
     private final VagaRepo vagaRepo;
 
-    @Autowired
     public EmpresaService(EmpresaRepo empresaRepo, VagaRepo vagaRepo) {
         this.empresaRepo = empresaRepo;
         this.vagaRepo = vagaRepo;
