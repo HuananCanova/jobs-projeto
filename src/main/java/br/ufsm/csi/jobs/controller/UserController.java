@@ -23,16 +23,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Usuario> createUser(@RequestBody @Valid Usuario user, UriComponentsBuilder uriBuilder) {
-        userService.createUser(user);
-
-        // Verifica o valor do campo 'role' e atribui as roles apropriadas
-        if (user.getRoles().equals("ROLE_USER")) {
-            user.getRoles().add("ROLE_USER");
-        } else if (user.getRoles().equals("ROLE_EMPRESA")) {
-            user.getRoles().add("ROLE_EMPRESA");
-        }
-
-        // Salva o usuário com as roles atribuídas
+        user.getRoles().add("ROLE_USER");
         userService.createUser(user);
 
         URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
