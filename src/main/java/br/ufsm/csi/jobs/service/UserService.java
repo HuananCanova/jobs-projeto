@@ -22,7 +22,6 @@ public class UserService {
     public void createUser(Usuario user) {
         user.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
 
-        // Verifica o valor do campo 'role' e atribui as roles apropriadas
         if (user.getRoles().equals("ROLE_USER")) {
             user.getRoles().add("ROLE_USER");
         } else if (user.getRoles().equals("ROLE_EMPRESA")) {
