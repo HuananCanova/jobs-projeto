@@ -5,6 +5,7 @@ import br.ufsm.csi.jobs.service.VagaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -23,6 +24,7 @@ public class VagaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_EMPRESA')")
     public ResponseEntity<Vaga> createVaga(@RequestBody @Valid Vaga vaga, UriComponentsBuilder uriBuilder) {
         vagaService.saveVaga(vaga);
         URI uri = uriBuilder.path("/vaga/{id}").buildAndExpand(vaga.getId()).toUri();
@@ -44,6 +46,7 @@ public class VagaController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EMPRESA')")
     public ResponseEntity<Void> deleteVaga(@PathVariable Long id) {
         vagaService.deleteById(id);
         return ResponseEntity.noContent().build();

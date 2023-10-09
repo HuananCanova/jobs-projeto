@@ -14,7 +14,8 @@ import java.util.Set;
 @Table(name = "users")
 public class Usuario {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
     private Long id;
 
     @NotBlank(message = "Campo Obrigatório!")

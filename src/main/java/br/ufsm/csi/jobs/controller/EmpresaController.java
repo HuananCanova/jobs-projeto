@@ -54,6 +54,7 @@ public class EmpresaController {
 
     @Transactional
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EMPRESA')")
     public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) {
         empresaService.deleteVagasByEmpresaId(id);
         empresaService.deleteEmpresaById(id);

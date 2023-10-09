@@ -2,6 +2,7 @@ package br.ufsm.csi.jobs.service;
 
 import br.ufsm.csi.jobs.model.Candidatura;
 import br.ufsm.csi.jobs.repo.CandidaturaRepo;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,16 @@ public class CandidaturaService {
         return candidaturaRepo.findAll();
     }
 
-    public Candidatura getCandidaturaById(Long id) {
-        Optional<Candidatura> optionalCandidatura = candidaturaRepo.findById(id);
-        if (optionalCandidatura.isPresent()) {
-            return optionalCandidatura.get();
-        }
-        return null;
+    public Optional<Candidatura> getCandidaturaById(Long id) {
+        return candidaturaRepo.findById(id)
+                .map(candidatura -> {
+                    Hibernate.initialize(candidatura.getUser());
+                    Hibernate.initialize(candidatura.getVaga());
+                    return candidatura;
+                });
     }
+
+
 
 
     public void deleteCandidatura(Long id) {

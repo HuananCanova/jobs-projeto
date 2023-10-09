@@ -4,7 +4,6 @@ import br.ufsm.csi.jobs.model.Empresa;
 import br.ufsm.csi.jobs.repo.EmpresaRepo;
 import br.ufsm.csi.jobs.repo.VagaRepo;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,16 +12,23 @@ import java.util.Optional;
 @Service
 public class EmpresaService {
     private final EmpresaRepo empresaRepo;
+    private final EnderecoService enderecoService;
     private final VagaRepo vagaRepo;
 
-    public EmpresaService(EmpresaRepo empresaRepo, VagaRepo vagaRepo) {
+    public EmpresaService(EmpresaRepo empresaRepo, EnderecoService enderecoService, VagaRepo vagaRepo) {
         this.empresaRepo = empresaRepo;
+        this.enderecoService = enderecoService;
         this.vagaRepo = vagaRepo;
     }
     @Transactional
     public void createEmpresa(Empresa empresa) {
+        if (empresa.getEndereco() != null) {
+            // Certifique-se de que o Endereco seja persistido antes da Empresa
+            enderecoService.salvarEndereco(empresa.getEndereco());
+        }
         empresaRepo.save(empresa);
     }
+
 
 
     public Optional<Empresa> getEmpresaById(Long id) {

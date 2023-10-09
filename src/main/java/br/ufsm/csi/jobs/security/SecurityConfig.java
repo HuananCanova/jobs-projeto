@@ -28,14 +28,21 @@ public class SecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .sessionManagement(sm-> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        auth.
+                                // PERMIT ALL
+                                requestMatchers(HttpMethod.POST, "/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/register/empresa").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/register/candidato").permitAll()
-                                .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasAnyAuthority("ROLE_USER")
-                                .requestMatchers(HttpMethod.GET, "/empresa").hasAnyAuthority("ROLE_USER")
-                                .requestMatchers(HttpMethod.POST, "/empresa").hasAnyAuthority("ROLE_EMPRESA")
-                                .requestMatchers(HttpMethod.GET, "/empresa/{id}").hasAnyAuthority("ROLE_USER")
-                                .requestMatchers(HttpMethod.GET, "/vaga").hasAnyAuthority("ROLE_USER")
+                                // - /EMPRESA
+                                .requestMatchers(HttpMethod.POST, "/empresa").hasAuthority("ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.PUT, "/empresa").hasAuthority("ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.DELETE, "/empresa").hasAuthority("ROLE_EMPRESA")
+                                // - /VAGA
+                                .requestMatchers(HttpMethod.POST, "/vaga").hasAuthority("ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.PUT, "/vaga").hasAuthority("ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.DELETE, "/vaga").hasAuthority("ROLE_EMPRESA")
+                                // - /CANDIDATURA
+                                .requestMatchers(HttpMethod.POST, "/candidatura").hasAuthority("ROLE_USER")
                                 .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
