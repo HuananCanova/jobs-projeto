@@ -20,14 +20,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/candidatura")
 public class CandidaturaController {
+
     @Autowired
     private CandidaturaService candidaturaService;
 
-    @Autowired
-    private UserService usuarioService;
-
-    @Autowired
-    private VagaService vagaService;
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -36,6 +32,7 @@ public class CandidaturaController {
         URI uri = uriBuilder.path("/candidatura/{id}").buildAndExpand(candidatura.getId()).toUri();
         return ResponseEntity.created(uri).body(candidaturaService.getCandidaturaById(candidatura.getId()).orElse(null));
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Candidatura>> getCandidaturaById(@PathVariable Long id){
         Optional<Candidatura> candidatura = candidaturaService.getCandidaturaById(id);

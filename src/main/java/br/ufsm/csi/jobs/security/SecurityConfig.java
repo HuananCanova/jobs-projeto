@@ -38,11 +38,17 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/empresa").hasAuthority("ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.DELETE, "/empresa").hasAuthority("ROLE_EMPRESA")
                                 // - /VAGA
+                                .requestMatchers(HttpMethod.GET, "/vaga").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.GET, "/vaga/{id}").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.POST, "/vaga").hasAuthority("ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.PUT, "/vaga").hasAuthority("ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.DELETE, "/vaga").hasAuthority("ROLE_EMPRESA")
                                 // - /CANDIDATURA
+                                .requestMatchers(HttpMethod.GET, "/candidatura").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.GET, "/candidatura/{id}").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.POST, "/candidatura").hasAuthority("ROLE_USER")
+                                // - /USERS
+                                .requestMatchers(HttpMethod.GET, "/user").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
                                 .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
