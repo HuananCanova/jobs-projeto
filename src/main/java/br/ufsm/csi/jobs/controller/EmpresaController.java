@@ -52,13 +52,45 @@ public class EmpresaController {
         return empresa.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EMPRESA')")
+    public ResponseEntity<Empresa> updateEmpresa(@PathVariable Long id, @RequestBody @Valid Empresa novaEmpresa) {
+        Optional<Empresa> empresaExistente = empresaService.getEmpresaById(id);
+
+        if (empresaExistente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Empresa empresa = empresaExistente.get();
+
+        // Atualize os campos da empresa existente com os dados da nova empresa
+        empresa.setRazaoSocial(novaEmpresa.getRazaoSocial());
+        empresa.setCNPJ(novaEmpresa.getCNPJ());
+        empresa.setEmail(novaEmpresa.getEmail());
+        // Atualize outros campos conforme necessário
+
+        empresaService.updateEmpresa(empresa); // Método para salvar a empresa atualizada
+
+        return ResponseEntity.ok(empresa);
+    }
+
+
     @Transactional
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_EMPRESA')")
-    public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) {
-        empresaService.deleteVagasByEmpresaId(id);
-        empresaService.deleteEmpresaById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteEmpresa(@PathVariable Long id) {
+        Optional<Empresa> empresa = empresaService.getEmpresaById(id);
 
-}
+        if (empresa.isPresent()) {
+            String razaoSocial = empresa.get().getRazaoSocial();
+
+            empresaService.deleteVagasByEmpresaId(id);
+            empresaService.deleteEmpresaById(id);
+
+            return ResponseEntity.ok("Empresa com ID " + id + " e razão social '" + razaoSocial + "' foi deletada com sucesso.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

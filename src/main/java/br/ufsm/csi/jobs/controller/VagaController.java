@@ -44,11 +44,41 @@ public class VagaController {
         return ResponseEntity.ok(vaga.orElseThrow());
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EMPRESA')")
+    public ResponseEntity<Vaga> updateVaga(@PathVariable Long id, @RequestBody @Valid Vaga novaVaga) {
+        Optional<Vaga> vagaExistente = vagaService.getVagaById(id);
+
+        if (vagaExistente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Vaga vaga = vagaExistente.get();
+
+        vaga.setTitulo(novaVaga.getTitulo());
+        vaga.setDescricao(novaVaga.getDescricao());
+        vaga.setRequisitos(novaVaga.getRequisitos());
+
+        vagaService.updateVaga(vaga);
+
+        return ResponseEntity.ok(vaga);
+    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_EMPRESA')")
-    public ResponseEntity<Void> deleteVaga(@PathVariable Long id) {
-        vagaService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteVaga(@PathVariable Long id) {
+        Optional<Vaga> vaga = vagaService.getVagaById(id);
+
+        if (vaga.isPresent()) {
+            String titulo = vaga.get().getTitulo();
+            String descricao = vaga.get().getDescricao();
+
+            vagaService.deleteById(id);
+
+            return ResponseEntity.ok("Vaga com ID " + id + " e título '" + titulo + "' e descrição '" + descricao + "' foi deletada com sucesso.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }

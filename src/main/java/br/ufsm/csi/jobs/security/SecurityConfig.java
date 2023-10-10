@@ -38,7 +38,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/empresa").hasAuthority("ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.DELETE, "/empresa").hasAuthority("ROLE_EMPRESA")
                                 // - /VAGA
-                                .requestMatchers(HttpMethod.GET, "/vaga").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
+                                .requestMatchers(HttpMethod.GET, "/vaga").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/vaga/{id}").hasAnyAuthority("ROLE_USER", "ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.POST, "/vaga").hasAuthority("ROLE_EMPRESA")
                                 .requestMatchers(HttpMethod.PUT, "/vaga").hasAuthority("ROLE_EMPRESA")

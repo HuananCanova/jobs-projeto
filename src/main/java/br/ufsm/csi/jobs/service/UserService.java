@@ -3,9 +3,9 @@ package br.ufsm.csi.jobs.service;
 import br.ufsm.csi.jobs.dto.UserDTO;
 import br.ufsm.csi.jobs.model.Usuario;
 import br.ufsm.csi.jobs.repo.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +47,11 @@ public class UserService {
         return new UserDTO(user);
     }
 
+    public void updateUser(Usuario usuario) {
+        userRepo.save(usuario);
+    }
+
+    @Transactional
     public void deleteUser(Long id){
         if (userRepo.existsById(id)) {
             userRepo.deleteById(id);

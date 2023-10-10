@@ -50,6 +50,12 @@ public class EmpresaService {
     }
 
     @Transactional
+    public void updateEmpresa(Empresa empresa) {
+        empresaRepo.save(empresa);
+    }
+
+
+    @Transactional
     public void deleteVagasByEmpresaId(Long id) {
         vagaRepo.deleteByEmpresaId(id);
     }

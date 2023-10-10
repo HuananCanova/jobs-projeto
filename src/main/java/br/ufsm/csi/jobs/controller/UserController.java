@@ -6,11 +6,13 @@ import br.ufsm.csi.jobs.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -49,6 +51,30 @@ public class UserController {
             return userService.findUser(id);
 
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody @Valid Usuario novoUsuario) {
+        Optional<Usuario> usuarioExistente = userService.getUserById(id);
+
+        if (usuarioExistente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Usuario usuario = usuarioExistente.get();
+
+        // Atualize os campos do usuário existente com os dados do novo usuário
+        usuario.setNome(novoUsuario.getNome());
+        usuario.setEmail(novoUsuario.getEmail());
+        usuario.setSenha(new BCryptPasswordEncoder().encode(novoUsuario.getSenha()));
+        usuario.setCelular(novoUsuario.getCelular());
+        usuario.setFotoPerfilUrl(novoUsuario.getFotoPerfilUrl());
+        // Atualize outros campos conforme necessário
+
+        userService.updateUser(usuario); // Método para salvar o usuário atualizado
+
+        return ResponseEntity.ok(usuario);
+    }
+
 
 
     @DeleteMapping("/{id}")

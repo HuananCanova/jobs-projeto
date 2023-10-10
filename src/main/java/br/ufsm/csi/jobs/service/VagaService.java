@@ -2,6 +2,7 @@ package br.ufsm.csi.jobs.service;
 
 import br.ufsm.csi.jobs.model.Vaga;
 import br.ufsm.csi.jobs.repo.VagaRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,11 @@ public class VagaService {
         vagaRepo.existsById(id);
         vagaRepo.deleteById(id);
     }
+    @Transactional
+    public void updateVaga(Vaga vaga) {
+        vagaRepo.save(vaga);
+    }
+
 
     public Optional<Vaga> getVagaById(Long id) {
         return vagaRepo.findById(id);

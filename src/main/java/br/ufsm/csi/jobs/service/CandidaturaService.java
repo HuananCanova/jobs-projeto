@@ -36,8 +36,6 @@ public class CandidaturaService {
     }
 
 
-
-
     public void deleteCandidatura(Long id) {
         candidaturaRepo.deleteById(id);
     }

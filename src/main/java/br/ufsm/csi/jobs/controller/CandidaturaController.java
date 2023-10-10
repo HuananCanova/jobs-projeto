@@ -49,8 +49,19 @@ public class CandidaturaController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCandidatura(@PathVariable Long id) {
-        candidaturaService.deleteCandidatura(id);
-        return ResponseEntity.noContent().build();
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<String> deleteCandidatura(@PathVariable Long id) {
+        Optional<Candidatura> candidatura = candidaturaService.getCandidaturaById(id);
+
+        if (candidatura.isPresent()) {
+            String descricaoVaga = candidatura.get().getVaga().getDescricao(); // Obtenha a descrição da vaga associada à candidatura
+
+            candidaturaService.deleteCandidatura(id);
+
+            return ResponseEntity.ok("Candidatura com ID " + id + " associada à vaga '" + descricaoVaga + "' foi deletada com sucesso.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }
